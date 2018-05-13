@@ -79,9 +79,9 @@ class testHTTPRequestHandler(
             if "limit" in self.path:
                 limit_1 = information1[1].split('=')[1]
                 if limit_1 == "":
-                    limit_1 = "10"
+                    limit_1 = "20"
             else:
-                limit_1 = "10"
+                limit_1 = "20"
             print("The client has made the request correctly :)")
 
             information2 = "/drug/label.json?search=openfda.manufacturer_name:" + manufacturer + '&' + 'limit=' + limit_1  # Means the url we are searching as a client with the limit and the manufacturer name include
@@ -238,7 +238,7 @@ class testHTTPRequestHandler(
                 i = 0
 
                 while i < limit_2:  # Inside of this file, we create a while loop to create another list with the name of the drug and the warnings for each of the drugs
-                    list_3 = "<font face='courier'>" + "<t>" + "<li>" + "The drug &nbsp;" + list_1[i] + "has this warnings: " + warnings[i] + "</font>"
+                    list_3 = "<font face='courier'>" + "<t>" + "<li>" + "The drug " + list_1[i] + "&nbsp; has this warnings: " + warnings[i] + "</font>"
                     file.write(list_3)
                     i += 1
 
