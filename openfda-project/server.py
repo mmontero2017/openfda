@@ -101,8 +101,7 @@ class testHTTPRequestHandler(
 
             while i < limit_2:  # We create a while loop in order to append the results of the search of the client one by one until we reach the value of the limit
                 try:
-                    list_1.append(repos["results"][i]["openfda"]["brand_name"][
-                                      0])  # We put all the new information about the drugs in the first list
+                    list_1.append(repos["results"][i]["openfda"]["brand_name"][0])  # We put all the new information about the drugs in the first list
                     i += 1
                 except:  # In order to detect drugs that are not in url, we create a try-except "program"
                     list_1.append("Not known")
@@ -120,8 +119,7 @@ class testHTTPRequestHandler(
 
             headers = {'User-Agent': 'http-client'}
             conn = http.client.HTTPSConnection("api.fda.gov")
-            information1 = self.path.strip('/listCompanies?').split(
-                '=')  # We remove '/search?' and separate the rest at '&'
+            information1 = self.path.strip('/listCompanies?').split('=')  # We remove '/search?' and separate the rest at '&'
             limit_1 = information1[1]
             print("The client has made the request correctly :)")
 
