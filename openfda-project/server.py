@@ -35,9 +35,9 @@ class testHTTPRequestHandler(
             if "limit" in self.path:  # If we introduce in our request as clients a limit, is because we want to know a concrent number of drugs so as programmers we have to impliment that option for the client
                 limit_1 = information1[1].split('=')[1]
                 if limit_1 == "":
-                    limit_1 = "10"
+                    limit_1 = "20"
             else:
-                limit_1 = "10"
+                limit_1 = "20"
             print("The client has made the request correctly :)")
 
             information2 = "/drug/label.json?search=active_ingredient:" + drugs + '&' + 'limit=' + limit_1  # Means the url we are searching as a client with the limit and the active ingredient include
@@ -57,8 +57,7 @@ class testHTTPRequestHandler(
 
             while i < limit_2:  # We create a while loop in order to append the results of the search of the client one by one until we reach the value of the limit
                 try:
-                    list_1.append(repos["results"][i]["openfda"]["brand_name"][
-                                      0])  # We put all the new information about the drugs in the first list
+                    list_1.append(repos["results"][i]["openfda"]["brand_name"][0])  # We put all the new information about the drugs in the first list
                     i += 1
                 except:  # In order to detect drugs that are not in url, we create a try-except "program"
                     list_1.append("Not known")
@@ -68,7 +67,7 @@ class testHTTPRequestHandler(
             with open("data_drugs.html", "w") as file:  # We write all the info in the html file "manufacturers_list"
                 file.write(list_2)
                 for u in list_1:
-                    list_3 = "<t>" + "<li>" + u
+                    list_3 = "<font face='courier'>" + "<t>" + "<li>" + u + "</font>"
                     file.write(list_3)
 
         def drugs_manufacturer_name():  # We make a definition without any argument in order to search drugs taking into account the manufacturer name parameter with a limit in the url where the info is available (api.fda.gov)
@@ -80,9 +79,9 @@ class testHTTPRequestHandler(
             if "limit" in self.path:
                 limit_1 = information1[1].split('=')[1]
                 if limit_1 == "":
-                    limit_1 = "20"
+                    limit_1 = "10"
             else:
-                limit_1 = "20"
+                limit_1 = "10"
             print("The client has made the request correctly :)")
 
             information2 = "/drug/label.json?search=openfda.manufacturer_name:" + manufacturer + '&' + 'limit=' + limit_1  # Means the url we are searching as a client with the limit and the manufacturer name include
@@ -102,7 +101,8 @@ class testHTTPRequestHandler(
 
             while i < limit_2:  # We create a while loop in order to append the results of the search of the client one by one until we reach the value of the limit
                 try:
-                    list_1.append(repos["results"][i]["openfda"]["brand_name"][0])  # We put all the new information about the drugs in the first list
+                    list_1.append(repos["results"][i]["openfda"]["brand_name"][
+                                      0])  # We put all the new information about the drugs in the first list
                     i += 1
                 except:  # In order to detect drugs that are not in url, we create a try-except "program"
                     list_1.append("Not known")
@@ -113,7 +113,7 @@ class testHTTPRequestHandler(
                       "w") as file:  # We write all the info in the html file "manufacturers_list"
                 file.write(list_2)
                 for u in list_1:
-                    list_3 = "<t>" + "<li>" + u
+                    list_3 = "<font face='courier'>" + "<t>" + "<li>" + u + "</font>"
                     file.write(list_3)
 
         def list_manufacturers():  # We make a definition without any argument in order to search drugs taking into account the company parameter with a limit in the url where the info is available (api.fda.gov)
@@ -142,18 +142,17 @@ class testHTTPRequestHandler(
 
             while i < limit_2:  # We create a while loop in order to append the results of the search of the client one by one until we reach the value of the limit
                 try:
-                    list_1.append(repos['results'][i]["openfda"]['brand_name'][0])  # We put all the new information about the drugs in the first list
+                    list_1.append(repos["results"][i]["openfda"]['brand_name'][0])  # We put all the new information about the drugs in the first list
                     i += 1
                 except:  # In order to detect drugs that are not in url, we create a try-except "program"
                     list_1.append("Not known")
                     print("We cannot find that drug in our list. Please, try again!")
                     i += 1
 
-            with open("manufacturers_list.html",
-                      "w") as file:  # We write all the info in the html file "manufacturers_list"
+            with open("manufacturers_list.html","w") as file:  # We write all the info in the html file "manufacturers_list"
                 file.write(list_2)
                 for u in list_1:
-                    list_3 = "<t>" + "<li>" + u
+                    list_3 = "<font face='courier'>" + "<t>" + "<li>" + u + "</font>"
                     file.write(list_3)
 
         def list_drugs():  # We make a definition without any argument in order to search drugs with a limit in the url where the info is available (api.fda.gov)
@@ -182,8 +181,7 @@ class testHTTPRequestHandler(
 
             while i < limit_2:  # We create a while loop in order to append the results of the search of the client one by one until we reach the value of the limit
                 try:
-                    list_1.append(repos['results'][a]["openfda"]['brand_name'][
-                                      0])  # We put all the new information about the drugs in the first list
+                    list_1.append(repos['results'][i]["openfda"]['brand_name'][0])  # We put all the new information about the drugs in the first list
                     i += 1
                 except KeyError:  # In order to detect drugs that are not in url, we create a try-except "program"
                     list_1.append("Not known")
@@ -193,15 +191,14 @@ class testHTTPRequestHandler(
             with open("drugs_list.html", "w") as file:  # We write all the info in the html file "drugs_list"
                 file.write(list_2)
                 for u in list_1:
-                    list_3 = "<t>" + "<li>" + u
+                    list_3 = "<font face='courier'>" + "<t>" + "<li>" + u + "</font>"
                     file.write(list_3)
 
         def list_warnings():  # We make a definition without any argument in order to search drugs taking into account the warning parameter with a limit in the url where the info is available (api.fda.gov)
 
             headers = {'User-Agent': 'http-client'}
             conn = http.client.HTTPSConnection("api.fda.gov")
-            information1 = self.path.strip('/listWarnings?').split(
-                '=')  # We remove '/search?' and separate the rest at '&'
+            information1 = self.path.strip('/listWarnings?').split('=')  # We remove '/search?' and separate the rest at '&'
             limit_1 = information1[1]
             print("The client has made the request correctly :)")
 
@@ -238,57 +235,56 @@ class testHTTPRequestHandler(
                     warnings.append("Not known")
                     j += 1
 
-            with open("warnings_list.html",
-                      "w") as file:  # We create a html file with the information encode in the list_2
+            with open("warnings_list.html","w") as file:  # We create a html file with the information encode in the list_2
                 file.write(list_2)
                 i = 0
 
                 while i < limit_2:  # Inside of this file, we create a while loop to create another list with the name of the drug and the warnings for each of the drugs
-                    list_3 = "<t>" + "<li>" + "The drug &nbsp;" + list_1[i] + "has this warnings: " + warnings[i]
+                    list_3 = "<font face='courier'>" + "<t>" + "<li>" + "The drug &nbsp;" + list_1[i] + "has this warnings: " + warnings[i] + "</font>"
                     file.write(list_3)
                     i += 1
 
         if self.path == "/":
             print("SEARCH: The client is searching a web")
             with open("search.html", "r") as file:
-                message_1 = file.read()
-                self.wfile.write(bytes(message_1, "utf8"))
+                message = file.read()
+                self.wfile.write(bytes(message, "utf8"))
 
         elif "searchCompany" in self.path:  # If the client is searching specifically for a drug's Company, he/she must put searchCompany in order to enter into the file manufacturer_name we created previously with all the information the client needs
             drugs_manufacturer_name()  # Definition in which is inside the file manufacturer_name
 
             with open("manufacturer_name.html", "r") as file:
-                message_2 = file.read()
-                self.wfile.write(bytes(message_2, "utf8"))
+                message = file.read()
+                self.wfile.write(bytes(message, "utf8"))
 
         elif "searchDrug" in self.path:  # If the client is searching specifically for a drug's active ingredient, he/she must put searchDrug in order to enter into the file data_drugs we created previously with all the information the client needs
             drugs_active_ingredient()  # Definition in which is inside the file data_drugs
 
             with open("data_drugs.html", "r") as file:
-                message_3 = file.read()
-                self.wfile.write(bytes(message_3, "utf8"))
+                message = file.read()
+                self.wfile.write(bytes(message, "utf8"))
 
 
         elif "listDrugs" in self.path:  # If the client is searching specifically for a drug, he/she must put listDrugs in order to enter into the file drugs_list we created previously with all the information the client needs
             list_drugs()  # Definition in which is inside the file drugs_list
 
             with open("drugs_list.html", "r") as file:
-                message_4 = file.read()
-                self.wfile.write(bytes(message_4, "utf8"))
+                message = file.read()
+                self.wfile.write(bytes(message, "utf8"))
 
         elif "listCompanies" in self.path:  # If the client is searching specifically for a drug's Company, he/she must put listCompanies in order to enter into the file manufacturers_list we created previously with all the information the client needs
             list_manufacturers()  # Definition in which is inside the file manufacturers_list
 
             with open("manufacturers_list.html", "r") as file:
-                message_5 = file.read()
-                self.wfile.write(bytes(message_5, "utf8"))
+                message = file.read()
+                self.wfile.write(bytes(message, "utf8"))
 
         elif 'listWarnings' in self.path:  # If the client is searching specifically for a drug warning, he/she must put listWarnings in order to enter into the file warnings_list we created previously with all the information the client needs
             list_warnings()  # Definition in which is inside the file warnings_list
 
             with open("warnings_list.html", "r") as file:
-                message_6 = file.read()
-                self.wfile.write(bytes(message_6, "utf8"))
+                message = file.read()
+                self.wfile.write(bytes(message, "utf8"))
 
 
 # Handler = http.server.SimpleHTTPRequestHandler
