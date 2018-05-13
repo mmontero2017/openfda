@@ -108,8 +108,7 @@ class testHTTPRequestHandler(
                     print("We cannot find drugs with this manufacturer name. Please, try again!")
                     i += 1
 
-            with open("manufacturer_name.html",
-                      "w") as file:  # We write all the info in the html file "manufacturers_list"
+            with open("manufacturer_name.html","w") as file:  # We write all the info in the html file "manufacturers_list"
                 file.write(list_2)
                 for u in list_1:
                     list_3 = "<font face='courier'>" + "<t>" + "<li>" + u + "</font>"
@@ -179,7 +178,7 @@ class testHTTPRequestHandler(
 
             while i < limit_2:  # We create a while loop in order to append the results of the search of the client one by one until we reach the value of the limit
                 try:
-                    list_1.append(repos['results'][i]["openfda"]['brand_name'][0])  # We put all the new information about the drugs in the first list
+                    list_1.append(repos["results"][i]["openfda"]["brand_name"][0])  # We put all the new information about the drugs in the first list
                     i += 1
                 except KeyError:  # In order to detect drugs that are not in url, we create a try-except "program"
                     list_1.append("Not known")
@@ -236,8 +235,7 @@ class testHTTPRequestHandler(
             with open("warnings_list.html","w") as file:  # We create a html file with the information encode in the list_2
                 file.write(list_2)
                 i = 0
-
-                while i < limit_2:  # Inside of this file, we create a while loop to create another list with the name of the drug and the warnings for each of the drugs
+                for u in warnings:
                     list_3 = "<font face='courier'>" + "<t>" + "<li>" + "The drug " + list_1[i] + "&nbsp; has this warnings: " + warnings[i] + "</font>"
                     file.write(list_3)
                     i += 1
