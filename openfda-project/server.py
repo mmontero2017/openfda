@@ -289,7 +289,6 @@ class testHTTPRequestHandler(
                 message = file.read()
                 self.wfile.write(bytes(message, "utf8"))
 
-
         elif "listDrugs" in self.path:  # If the client is searching specifically for a drug, he/she must put listDrugs in order to enter into the file drugs_list we created previously with all the information the client needs
             list_drugs()  # Definition in which is inside the file drugs_list
 
@@ -304,10 +303,24 @@ class testHTTPRequestHandler(
                 message = file.read()
                 self.wfile.write(bytes(message, "utf8"))
 
-        elif 'listWarnings' in self.path:  # If the client is searching specifically for a drug warning, he/she must put listWarnings in order to enter into the file warnings_list we created previously with all the information the client needs
+        elif "listWarnings" in self.path:  # If the client is searching specifically for a drug warning, he/she must put listWarnings in order to enter into the file warnings_list we created previously with all the information the client needs
             list_warnings()  # Definition in which is inside the file warnings_list
 
             with open("warnings_list.html", "r") as file:
+                message = file.read()
+                self.wfile.write(bytes(message, "utf8"))
+
+        elif "secret" in self.path:
+
+            with open("secret.html", "r") as file:
+                message = file.read()
+                self.wfile.write(bytes(message, "utf8"))
+
+        elif "redirect" in self.path:
+
+            print("SEARCH: The client entered search web")
+
+            with open("search.html", "r") as file:
                 message = file.read()
                 self.wfile.write(bytes(message, "utf8"))
 
