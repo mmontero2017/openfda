@@ -241,11 +241,20 @@ class testHTTPRequestHandler(
                     i += 1
 
         if self.path == "/":
-            print("SEARCH: The client is searching a web")
-            with open("search.html", "r") as file:
-                message = file.read()
-                self.wfile.write(bytes(message, "utf8"))
 
+            try:
+                print("SEARCH: The client is searching a web")
+                with open("search.html", "r") as file:
+                    message = file.read()
+                    self.wfile.write(bytes(message, "utf8"))
+
+            except KeyError:
+                print("There is an error")
+                print("Not found")
+                with open("error.html", "r") as file:
+                    message = file.read()
+                    self.wfile.write(bytes(message, "utf8"))
+                    
         elif "searchCompany" in self.path:  # If the client is searching specifically for a drug's Company, he/she must put searchCompany in order to enter into the file manufacturer_name we created previously with all the information the client needs
             drugs_manufacturer_name()  # Definition in which is inside the file manufacturer_name
 
@@ -282,7 +291,14 @@ class testHTTPRequestHandler(
                 message = file.read()
                 self.wfile.write(bytes(message, "utf8"))
 
+        else:
+            print("There is an error")
+            print("Not found")
+            with open("error.html", "r") as file:
+                message = file.read()
+            self.wfile.write(bytes(message, "utf8"))
 
+        return
 # Handler = http.server.SimpleHTTPRequestHandler
 Handler = testHTTPRequestHandler
 
