@@ -246,7 +246,7 @@ class testHTTPRequestHandler(
 
             while j < limit_2:
                 try:  # We use a try and except structure in case one of the drugs doesn't have any warning in it's description
-                    warnings.append(repos["results"][i]["warnings"][0])
+                    warnings.append(repos["results"][j]["openfda"]["warnings"][0])
                     j += 1
                 except:
                     warnings.append("Not known")
@@ -255,7 +255,7 @@ class testHTTPRequestHandler(
             with open("warnings_list.html","w") as file:  # We create a html file with the information encode in the list_2
                 file.write(list_2)
                 i = 0
-                for u in list_1:
+                for u in warnings:
                     list_3 = "<font face='courier'>" + "<t>" + "<li>" + "The drug " + list_1[i] + "&nbsp; has this warnings: " + warnings[i] + "</font>"
                     file.write(list_3)
                     i += 1
