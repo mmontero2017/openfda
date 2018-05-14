@@ -175,8 +175,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):  # This class 
 
             headers = {'User-Agent': 'http-client'}
             conn = http.client.HTTPSConnection("api.fda.gov")
-            information1 = self.path.strip('/listDrugs?').split(
-                '=')  # We remove '/search?' and separate the rest at '&'
+            information1 = self.path.strip('/listDrugs?').split('=')  # We remove '/search?' and separate the rest at '&'
             limit_1 = information1[1]
             print("The client has made the request correctly :)")
 
