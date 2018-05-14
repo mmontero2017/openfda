@@ -20,11 +20,31 @@ class testHTTPRequestHandler(
     # do_METHOD, in this case GET with the argument "self". We do this in order to return a response to the client
 
     def do_GET(self):
-        # Send response status code
-        self.send_response(200)
-        # Send headers
-        self.send_header('Content-type', 'text/html')
+
+        path = self.path
+
+        if path == "/" or "searchCompany" in path or "searchDrug" in path or "listDrugs" in path or "listWarnings" in path or "listCompanies" in path:
+            statuscode = 200  # Send response status code
+
+        elif "secret" in path:
+            statuscode = 401
+
+        elif "redirect" in path:
+            statuscode = 302
+
+        self.send_response(statuscode)  # Send headers
+
+        if path == "/" or "searchCompany" in path or "searchDrug" in path or "listDrugs" in path or "listWarnings" in path or "listCompanies" in path:
+            self.send_header('Content-type', 'text/html')
+
+        elif "secret" in path:
+            self.send_header('WWW-Authenticate', 'Basic realm="OpenFDA Private Zone"')
+
+        elif "redirect" in path:
+            self.send_header('Location', 'http://localhost:8000/')
+
         self.end_headers()
+
 
         def drugs_active_ingredient():  # Inside the class testHTTPRequestHandler and also the definition of do_Get
             # we make a definition without any argument in order to search drugs taking into account the active ingredient parameter with a limit in the url where the info is available (api.fda.gov)
@@ -254,7 +274,7 @@ class testHTTPRequestHandler(
                 with open("error.html", "r") as file:
                     message = file.read()
                     self.wfile.write(bytes(message, "utf8"))
-                    
+
         elif "searchCompany" in self.path:  # If the client is searching specifically for a drug's Company, he/she must put searchCompany in order to enter into the file manufacturer_name we created previously with all the information the client needs
             drugs_manufacturer_name()  # Definition in which is inside the file manufacturer_name
 
