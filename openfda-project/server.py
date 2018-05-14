@@ -20,26 +20,26 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):  # This class 
 
     def do_GET(self):
 
-        path = self.path
+        path = self.path # We change the status code taking into account the thing the client seeks
 
         if path == "/" or "searchCompany" in path or "searchDrug" in path or "listDrugs" in path or "listWarnings" in path or "listCompanies" in path:
-            statuscode = 200  # Send response status code
+            status_code = 200  # Send response status code
 
-        elif "secret" in path:
-            statuscode = 401
+        elif "secret" in path: # When we put secret in path the status code changes to 401
+            status_code = 401
 
-        elif "redirect" in path:
-            statuscode = 302
+        elif "redirect" in path: # When we put redirect in path the status code changes to 302
+            status_code = 302
 
-        self.send_response(statuscode)  # Send headers
+        self.send_response(status_code)  # Send headers
 
         if path == "/" or "searchCompany" in path or "searchDrug" in path or "listDrugs" in path or "listWarnings" in path or "listCompanies" in path:
             self.send_header('Content-type', 'text/html')
 
-        elif "secret" in path:
+        elif "secret" in path: # Here we put the things that will be in the page if the user puts secret in path
             self.send_header('WWW-Authenticate', 'Basic realm="OpenFDA Private Zone"')
 
-        elif "redirect" in path:
+        elif "redirect" in path: # Here we put the things that will be in the page if the user puts redirect in path
             self.send_header('Location', 'http://localhost:8000/')
 
         self.end_headers()
@@ -232,6 +232,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):  # This class 
             warnings = []  # We create an empty list (warnings)
             i = 0  # Starting point must be 0
             j = 0
+            k = 0
             list_2 = "<head>" + "<font face='courier' align='center' size='6' color='black'>" + "This is the list of all warnings of the drugs you are looking for:" + '<body style="background-color: #81F7BE">' + "</font>" + "</head>" "<ol>" + "\n"
             limit_2 = int(limit_1)  # limit_2 is the limit_1 convert into a integrer number
 
@@ -251,13 +252,14 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):  # This class 
                     warnings.append("Not known")
                     j += 1
 
-            with open("warnings_list.html","w") as file:  # We create a html file with the information encode in the list_2
+            with open("warnings_list.html","w") as file: # We create a html file with the information encode in the list_2
+
                 file.write(list_2)
-                i = 0
-                for u in warnings:
-                    list_3 = "<font face='courier'>" + "<t>" + "<li>" + "The drug " + list_1[i] + "&nbsp; has this warnings: " + warnings[i] + "</font>"
-                    file.write(list_3)
-                    i += 1
+                while k < limit_2:
+                    for u in warnings:
+                        list_3 = "<font face='courier'>" + "<t>" + "<li>" + "The drug " + list_1[i] + "&nbsp; has this warnings: " + warnings[j] + "</font>"
+                        file.write(list_3)
+                        k += 1
 
         if self.path == "/":
 
@@ -267,7 +269,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):  # This class 
                     message = file.read()
                     self.wfile.write(bytes(message, "utf8"))
 
-            except KeyError:
+            except KeyError: # If there is an error we send the user to the error html
                 print("There is an error")
                 print("Not found")
                 with open("error.html", "r") as file:
@@ -309,13 +311,13 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):  # This class 
                 message = file.read()
                 self.wfile.write(bytes(message, "utf8"))
 
-        elif "secret" in self.path:
+        elif "secret" in self.path: # If the client puts secret in the path, we will send him/her the secret html file
 
             with open("secret.html", "r") as file:
                 message = file.read()
                 self.wfile.write(bytes(message, "utf8"))
 
-        elif "redirect" in self.path:
+        elif "redirect" in self.path: # If the client puts redirect in the path, we will send him/her the redirect html file
 
             print("SEARCH: The client entered search web")
 
@@ -323,7 +325,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):  # This class 
                 message = file.read()
                 self.wfile.write(bytes(message, "utf8"))
 
-        else:
+        else: # In case of an error
             print("There is an error")
             print("Not found")
             with open("error.html", "r") as file:
@@ -331,8 +333,8 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):  # This class 
             self.wfile.write(bytes(message, "utf8"))
 
         return
-# Handler = http.server.SimpleHTTPRequestHandler
-Handler = testHTTPRequestHandler
+
+Handler = testHTTPRequestHandler # Handler = http.server.SimpleHTTPRequestHandler
 
 httpd = socketserver.TCPServer((IP, PORT), Handler)
 print("serving at %s:%s" % (IP, PORT))
