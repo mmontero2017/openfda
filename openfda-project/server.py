@@ -235,7 +235,7 @@ class testHTTPRequestHandler(
             with open("warnings_list.html","w") as file:  # We create a html file with the information encode in the list_2
                 file.write(list_2)
                 i = 0
-                for u in warnings:
+                for u in list_1:
                     list_3 = "<font face='courier'>" + "<t>" + "<li>" + "The drug " + list_1[i] + "&nbsp; has this warnings: " + warnings[i] + "</font>"
                     file.write(list_3)
                     i += 1
