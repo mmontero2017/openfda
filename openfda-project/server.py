@@ -15,8 +15,7 @@ socketserver.TCPServer.allow_reuse_address = True  # This determines whether the
 
 # HTTPRequestHandler class: this module is used as a basis for building functioning Web servers
 
-class testHTTPRequestHandler(
-    http.server.BaseHTTPRequestHandler):  # This class is usually used to handle the requests that arrive to the server
+class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):  # This class is usually used to handle the requests that arrive to the server
     # do_METHOD, in this case GET with the argument "self". We do this in order to return a response to the client
 
     def do_GET(self):
