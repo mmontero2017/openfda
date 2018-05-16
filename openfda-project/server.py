@@ -54,9 +54,9 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):  # This class 
             if "limit" in self.path:  # If we introduce in our request as clients a limit, is because we want to know a concrent number of drugs so as programmers we have to impliment that option for the client
                 limit_1 = information1[1].split('=')[1]
                 if limit_1 == "":
-                    limit_1 = "20"
+                    limit_1 = "10"
             else:
-                limit_1 = "20"
+                limit_1 = "10"
             print("The client has made the request correctly :)")
 
             information2 = "/drug/label.json?search=active_ingredient:" + drugs + '&' + 'limit=' + limit_1  # Means the url we are searching as a client with the limit and the active ingredient include
@@ -98,9 +98,9 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):  # This class 
             if "limit" in self.path:
                 limit_1 = information1[1].split('=')[1]
                 if limit_1 == "":
-                    limit_1 = "20"
+                    limit_1 = "10"
             else:
-                limit_1 = "20"
+                limit_1 = "10"
             print("The client has made the request correctly :)")
 
             information2 = "/drug/label.json?search=openfda.manufacturer_name:" + manufacturer + '&' + 'limit=' + limit_1  # Means the url we are searching as a client with the limit and the manufacturer name include
