@@ -228,37 +228,24 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):  # This class 
             repos = json.loads(repos_raw)
 
             list_1 = []  # We create a empty list (list_1)
-            warnings = []  # We create an empty list (warnings)
             i = 0  # Starting point must be 0
-            j = 0
-            k = 0
             list_2 = "<head>" + "<font face='courier' align='center' size='6' color='black'>" + "This is the list of all warnings of the drugs you are looking for:" + '<body style="background-color: #81F7BE">' + "</font>" + "</head>" "<ol>" + "\n"
             limit_2 = int(limit_1)  # limit_2 is the limit_1 convert into a integrer number
 
             while i < limit_2:  # We create a while loop in order to append the results of the search of the client one by one until we reach the value of the limit
                 try:  # We use a try and except structure in case one of the drugs doesn't have any brandname in it's description of the openfda
-                    list_1.append(repos["results"][i]["openfda"]["brand_name"][0])
+                    list_1.append(repos["results"][i]["warnings"][0])
                     i += 1
                 except:
                     list_1.append("Not known")
+                    print("This specific drug doesn't have any warnings.")
                     i += 1
 
-            while j < limit_2:
-                try:  # We use a try and except structure in case one of the drugs doesn't have any warning in it's description
-                    warnings.append(repos["results"][j]["openfda"]["warnings"][0])
-                    j += 1
-                except:
-                    warnings.append("Not known")
-                    j += 1
-
-            with open("warnings_list.html","w") as file: # We create a html file with the information encode in the list_2
-
-                file.write(list_2)
-                while k < limit_2:
-                    for u in warnings:
-                        list_3 = "<font face='courier'>" + "<t>" + "<li>" + "The drug " + list_1[i] + "&nbsp; has this warnings: " + warnings[j] + "</font>"
-                        file.write(list_3)
-                        k += 1
+        with open("warnings_list.html", "w") as file:  # We create a html file with the information encode in the list_2
+            file.write(list_2)
+            for warning in list_1:
+                list_1 = "<t>" + "<li>" + warning
+                file.write(list_1)
 
         if self.path == "/":
 
