@@ -241,11 +241,11 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):  # This class 
                     print("This specific drug doesn't have any warnings.")
                     i += 1
 
-        with open("warnings_list.html", "w") as file:  # We create a html file with the information encode in the list_2
-            file.write(list_2)
-            for warning in list_1:
-                list_1 = "<t>" + "<li>" + warning
-                file.write(list_1)
+            with open("warnings_list.html", "w") as file:  # We create a html file with the information encode in the list_2
+                file.write(list_2)
+                for warning in list_1:
+                    list_1 = "<t>" + "<li>" + warning
+                    file.write(list_1)
 
         if self.path == "/":
 
